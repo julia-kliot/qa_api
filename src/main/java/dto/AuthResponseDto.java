@@ -8,5 +8,7 @@ import lombok.*;
 @ToString
 @Builder
 public class AuthResponseDto {
+    Boolean registration;
+    String status;
     String token;
 }

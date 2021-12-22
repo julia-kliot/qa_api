@@ -20,6 +20,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
 
     implementation 'com.jayway.restassured:rest-assured:2.9.0'
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.2'
 }
 
 test {
