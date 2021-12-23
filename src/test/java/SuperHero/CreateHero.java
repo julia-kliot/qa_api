@@ -1,6 +1,7 @@
 package SuperHero;
 
 import SuperHeroDto.HeroRequiestDto;
+import SuperHeroDto.HeroResponseDto;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import dto.AuthRequestDto;
@@ -23,41 +24,45 @@ public class CreateHero {
                 .birthDate("")
                 .city("Dd12345~")
                 .fullName("")
-                .gender()
+                .gender("")
+                .phone("")
                 .build();
 
-        AuthResponseDto responseDto = given()
+        HeroResponseDto responseHDto = given()
                 .contentType("application/json")
-                .body(auth)
+                .body(hero)
                 .when()
-                .post("login")
+                .post("superheroes")
                 .then()
                 .assertThat().statusCode(200)
-                .extract().response().as(AuthResponseDto.class);
+                .extract().response().as(HeroResponseDto.class);
 
-        System.out.println( responseDto.getToken());
-        System.out.println(responseDto.getStatus());
-        System.out.println(responseDto.getRegistration());
+        System.out.println( responseHDto.getId());
+       // System.out.println(responseHDto.getBirthDate());
+        //System.out.println(responseHDto.getFullName());
 
     }
     @Test
     public void createHeroNeg(){
 
-            AuthRequestDto auth = AuthRequestDto.builder()
-                    .email("dolly@gmail.com")
-                    .password("Dd12345")
+            HeroRequiestDto hero = HeroRequiestDto.builder()
+                    .birthDate("")
+                    .city("Dd12345~")
+                    .fullName("")
+                    .gender("")
+                    .phone("")
                     .build();
 
             String message = given().contentType(ContentType.JSON)
-                    .body(auth)
+                    .body(hero)
                     .when()
-                    .get("login")
+                    .get("superheroes")
                     .then()
                     .assertThat().statusCode(401)
                     .extract().path("message");
 
             System.out.println(message);
-            Assert.assertEquals(message,"Wrong email or password");
+            Assert.assertEquals(message,"Unauthorized");
     }
 
 

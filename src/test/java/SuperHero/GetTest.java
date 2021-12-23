@@ -1,5 +1,6 @@
 package SuperHero;
 
+import SuperHeroDto.HeroResponseDto;
 import com.jayway.restassured.RestAssured;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -7,8 +8,8 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.core.StringContains.containsString;
 
-public class DeleteHeroTest {
-   Integer id= 56789;
+public class GetTest {
+    Integer id= 56789;
 
     @BeforeMethod
     public void precondition(){
@@ -20,11 +21,16 @@ public class DeleteHeroTest {
 
         given().header("Description", id)
                 .when()
-                .delete("superheroes/{id}",19987)
+                .get("superheroes/{id}",19987)
                 .then()
                 .statusCode(200)
                 .assertThat()
-                .body("status", containsString("was deleted"));
+                //.body();
+                .extract().response().as(HeroResponseDto.class);
 
+        //for (RecordDto record : allRecordsDto.getRecords()) {
+         //   System.out.println(record.getId());
+          //  System.out.println("***********");
+        }
     }
 }
